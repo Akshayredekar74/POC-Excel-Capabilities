@@ -144,14 +144,14 @@ demo = gr.Interface(
 )
 
 if __name__ == "__main__":
-    default_file = r"d:\Lens\BusinessCases\Sales_analysis_Electronic Store\Sales_January_2019.csv"
-    if os.path.exists(default_file):
-        load_file(default_file)
-        print(f"Pre-loaded: {default_file}")
+    # default_file = r"d:\Lens\BusinessCases\Sales_analysis_Electronic Store\Sales_January_2019.csv"
+    # if os.path.exists(default_file):
+    #     load_file(default_file)
+    #     print(f"Pre-loaded: {default_file}")
         
-        schema_info = conn.execute("SELECT * FROM data LIMIT 0").description
-        columns = [col[0] for col in schema_info]
-        print(f"Columns: {', '.join(columns)}")
+    #     schema_info = conn.execute("SELECT * FROM data LIMIT 0").description
+    #     columns = [col[0] for col in schema_info]
+    #     print(f"Columns: {', '.join(columns)}")
     
     print("Starting app...")
     demo.launch(share=False)
