@@ -8,4 +8,20 @@ wheels/
 
 # Virtual environments
 .venv
-.env 
+env
+.env
+
+.vscode
+json_chunking
+llm_chat
+rag
+final
+POC-Excel-Capabilities
+volumes
+volumes/
+
+json_chunking/
+llm_chat/
+rag/
+final/
+POC-Excel-Capabilities/

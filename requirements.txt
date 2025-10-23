@@ -1,3 +1,23 @@
+langchain
+langchain-core
+langchain-openai
+langchain-ollama
+langgraph
+sentence-transformers
+openai
+python-dotenv
+langchain-community
+tqdm
+ipywidgets
+jupyter
+wheel
+kernel
+setuptools
+chardet
+langchain-milvus
+openpyxl
+gradio
+
 
 # Core frameworks
 fastapi
@@ -49,3 +69,6 @@ aiofiles
 # Optional visualization & misc
 matplotlib-inline
 rich
+
+
+tabulate
