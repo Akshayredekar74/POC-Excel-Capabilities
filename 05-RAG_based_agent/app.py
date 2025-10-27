@@ -8,7 +8,7 @@ def initialize_system(files):
     global agent, uploaded_files
     
     if files is None or len(files) == 0:
-        return "⚠️ Please select at least one file"
+        return "Please select at least one file"
     
     try:
         setup_milvus()
@@ -20,28 +20,28 @@ def initialize_system(files):
         for file in files:
             table_name, columns = index_file(file.name)
             uploaded_files[table_name] = columns
-            file_info.append(f"✅ {table_name}: {', '.join(columns[:5])}{'...' if len(columns) > 5 else ''}")
+            file_info.append(f"{table_name}: {', '.join(columns[:5])}{'...' if len(columns) > 5 else ''}")
         
         agent = create_agent()
         
-        return f"🎉 Successfully loaded {len(files)} file(s):\n\n" + "\n".join(file_info) + "\n\n✨ Ready to chat!"
+        return f"loaded {len(files)} file(s):\n\n" + "\n".join(file_info) + "\n\n✨"
     except Exception as e:
-        return f"❌ Error: {str(e)}"
+        return f"Error: {str(e)}"
 
 def chat(message, history):
     global agent
     
     if agent is None:
-        return "⚠️ Please upload a file first using the Upload section above"
+        return "Please upload a file first using the Upload section above"
     
     if not message or message.strip() == "":
-        return "⚠️ Please enter a question"
+        return "Please enter a question"
     
     try:
         response = process_query(message, agent)
         return response
     except Exception as e:
-        return f"❌ Error processing query: {str(e)}"
+        return f"Error processing query: {str(e)}"
 
 def clear_session():
     """Clear chat history and return empty chatbot"""
@@ -63,14 +63,14 @@ custom_css = """
 
 with gr.Blocks(theme=gr.themes.Soft(), css=custom_css) as demo:
     gr.Markdown("""
-    # 🤖 Multi-File RAG & SQL Agent
+    # Multi-File RAG & SQL Agent
     
     Upload your CSV/Excel files and ask questions. The agent will automatically choose between:
     - **RAG**: For schema exploration and data understanding
     - **SQL**: For aggregations, filtering, and calculations
     """)
     
-    with gr.Accordion("📁 File Upload Section", open=True):
+    with gr.Accordion("File Upload Section", open=True):
         with gr.Row():
             with gr.Column(scale=3):
                 file_input = gr.File(
@@ -79,10 +79,10 @@ with gr.Blocks(theme=gr.themes.Soft(), css=custom_css) as demo:
                     file_count="multiple"
                 )
             with gr.Column(scale=1):
-                upload_btn = gr.Button("🚀 Load Files", variant="primary", size="lg")
+                upload_btn = gr.Button("Load Files", variant="primary", size="lg")
         
         status = gr.Textbox(
-            label="📊 System Status", 
+            label="System Status", 
             interactive=False, 
             lines=6,
             placeholder="Upload files to get started..."
@@ -90,7 +90,7 @@ with gr.Blocks(theme=gr.themes.Soft(), css=custom_css) as demo:
     
     gr.Markdown("---")
     
-    gr.Markdown("### 💬 Chat Interface")
+    gr.Markdown("### Chat Interface")
     
     chatbot = gr.Chatbot(
         label="Conversation", 
@@ -106,11 +106,11 @@ with gr.Blocks(theme=gr.themes.Soft(), css=custom_css) as demo:
     )
     
     with gr.Row():
-        submit = gr.Button("📤 Send", variant="primary", scale=2)
-        clear = gr.Button("🗑️ Clear Chat", variant="secondary", scale=1)
+        submit = gr.Button("Send", variant="primary", scale=2)
+        clear = gr.Button("Clear Chat", variant="secondary", scale=1)
     
     gr.Markdown("""
-    ### 💡 Example Questions:
+    ### Example Questions:
     - "What columns are available in the dataset?" (RAG)
     - "Show me the top 5 rows" (SQL)
     - "What is the total sales by category?" (SQL)

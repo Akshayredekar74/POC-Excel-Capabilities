@@ -17,7 +17,7 @@ chardet
 langchain-milvus
 openpyxl
 gradio
-
+langchain-google-genai
 
 # Core frameworks
 fastapi

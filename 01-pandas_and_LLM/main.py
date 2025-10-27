@@ -55,6 +55,62 @@ def load_and_analyze(file):
     except Exception as e:
         return f"Error loading file: {str(e)}", "", ""
 
+# def process_query(question):
+#     global global_df
+    
+#     if global_df is None:
+#         return "Please load a file first."
+#     if not question.strip():
+#         return "Please enter a question."
+    
+#     try:
+#         prompt = f"""You are a data analyst. Generate executable pandas/numpy code to answer this question about a DataFrame called 'df'.
+
+# DataFrame info:
+# - Shape: {global_df.shape}
+# - Columns: {list(global_df.columns)}
+# - Data Types: {global_df.dtypes.to_dict()}
+# - First 3 rows:
+# {global_df.head(3).to_string()}
+
+# Question: {question}
+
+# Generate ONLY Python code that:
+# 1. Uses pandas/numpy operations on 'df'
+# 2. Stores the final answer in variable 'result'
+# 3. No print statements, only assign to 'result'
+
+# Return ONLY the code without any explanation or markdown."""
+
+#         response = model.generate_content(prompt)
+#         code = response.text.strip()
+        
+#         if "```python" in code:
+#             code = code.split("```python")[1].split("```")[0].strip()
+#         elif "```" in code:
+#             code = code.split("```")[1].split("```")[0].strip()
+        
+#         executed_result = execute_pandas_code(code, global_df)
+        
+#         if isinstance(executed_result, str) and "Execution Error" in executed_result:
+#             return f"**Question:** {question}\n\n**Generated Code:**\n```python\n{code}\n```\n\n**Error:** {executed_result}"
+        
+#         formatted_result = format_result(executed_result)
+        
+#         return f"""**Question:** {question}
+
+# **Generated Code:**
+# ```python
+# {code}
+# ```
+
+# **Result:**
+# {formatted_result}"""
+#     except Exception as e:
+#         return f"Error: {str(e)}"
+    
+
+
 def process_query(question):
     global global_df
     
@@ -64,6 +120,7 @@ def process_query(question):
         return "Please enter a question."
     
     try:
+        # First LLM call: Generate code
         prompt = f"""You are a data analyst. Generate executable pandas/numpy code to answer this question about a DataFrame called 'df'.
 
 DataFrame info:
@@ -97,7 +154,23 @@ Return ONLY the code without any explanation or markdown."""
         
         formatted_result = format_result(executed_result)
         
+        # Second LLM call: Generate natural language explanation
+        explanation_prompt = f"""You are a data analyst. Explain the following analysis result in a clear and concise way.
+
+Question: {question}
+
+Result:
+{formatted_result}
+
+Provide a short natural language explanation of the result. Be direct and specific."""
+
+        explanation_response = model.generate_content(explanation_prompt)
+        explanation = explanation_response.text.strip()
+        
         return f"""**Question:** {question}
+
+**Answer:**
+{explanation}
 
 **Generated Code:**
 ```python
@@ -108,6 +181,8 @@ Return ONLY the code without any explanation or markdown."""
 {formatted_result}"""
     except Exception as e:
         return f"Error: {str(e)}"
+
+######################################### UI ######################################
 
 with gr.Blocks(title="Smart Data Analyst", theme=gr.themes.Soft()) as demo:
     gr.Markdown("""
@@ -145,17 +220,9 @@ with gr.Blocks(title="Smart Data Analyst", theme=gr.themes.Soft()) as demo:
     output = gr.Markdown(label="Results")
     
     gr.Markdown("### Example Questions")
-    gr.Examples(
-        examples=[
-            ["What is the total revenue?"],
-            ["Show me the top 10 products by profit margin"],
-            ["What is the average unit price?"],
-            ["How many unique products are there?"],
-            ["Which product category has the highest sales?"],
-            ["What is the profit margin for each product?"]
-        ],
-        inputs=question_input
-    )
+    # gr.Examples(
+    #     inputs=question_input
+    # )
     
     load_btn.click(fn=load_and_analyze, inputs=file_input, outputs=[file_status, cleaning_info, schema_info])
     submit_btn.click(fn=process_query, inputs=question_input, outputs=output)
