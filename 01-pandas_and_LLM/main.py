@@ -55,60 +55,6 @@ def load_and_analyze(file):
     except Exception as e:
         return f"Error loading file: {str(e)}", "", ""
 
-# def process_query(question):
-#     global global_df
-    
-#     if global_df is None:
-#         return "Please load a file first."
-#     if not question.strip():
-#         return "Please enter a question."
-    
-#     try:
-#         prompt = f"""You are a data analyst. Generate executable pandas/numpy code to answer this question about a DataFrame called 'df'.
-
-# DataFrame info:
-# - Shape: {global_df.shape}
-# - Columns: {list(global_df.columns)}
-# - Data Types: {global_df.dtypes.to_dict()}
-# - First 3 rows:
-# {global_df.head(3).to_string()}
-
-# Question: {question}
-
-# Generate ONLY Python code that:
-# 1. Uses pandas/numpy operations on 'df'
-# 2. Stores the final answer in variable 'result'
-# 3. No print statements, only assign to 'result'
-
-# Return ONLY the code without any explanation or markdown."""
-
-#         response = model.generate_content(prompt)
-#         code = response.text.strip()
-        
-#         if "```python" in code:
-#             code = code.split("```python")[1].split("```")[0].strip()
-#         elif "```" in code:
-#             code = code.split("```")[1].split("```")[0].strip()
-        
-#         executed_result = execute_pandas_code(code, global_df)
-        
-#         if isinstance(executed_result, str) and "Execution Error" in executed_result:
-#             return f"**Question:** {question}\n\n**Generated Code:**\n```python\n{code}\n```\n\n**Error:** {executed_result}"
-        
-#         formatted_result = format_result(executed_result)
-        
-#         return f"""**Question:** {question}
-
-# **Generated Code:**
-# ```python
-# {code}
-# ```
-
-# **Result:**
-# {formatted_result}"""
-#     except Exception as e:
-#         return f"Error: {str(e)}"
-    
 
 
 def process_query(question):
