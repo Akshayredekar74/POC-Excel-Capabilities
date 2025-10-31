@@ -1,74 +1,94 @@
+# Core LLM / LangChain stack
 langchain
 langchain-core
-langchain-openai
-langchain-ollama
-langgraph
-sentence-transformers
-openai
-python-dotenv
 langchain-community
-tqdm
-ipywidgets
-jupyter
-wheel
-kernel
-setuptools
-chardet
+langchain-openai
 langchain-milvus
-openpyxl
-gradio
-langchain-google-genai
+langgraph
+langgraph-sdk
+langgraph-runtime-inmem
+langfuse
+langfuse-langchain
 
-# Core frameworks
-fastapi
-uvicorn
-gradio
-python-dotenv
+# Vector DB / AI backends
+pymilvus
+lancedb
+duckdb
+faiss-cpu
 
-# LLM and Agent frameworks
+# Google / OpenAI integrations
+google-generativeai
+google-ai-generativelanguage
+openai
 groq
 
-# LlamaIndex (for embeddings and document handling)
-llama-index-core
-llama-index-embeddings-gemini
-llama-cloud
-llama-cloud-services
+# Web / API Frameworks
+fastapi
+uvicorn
+sse-starlette
 
-# Databases and vector stores
-lancedb
-chromadb
-duckdb
-sqlalchemy
-
-# Excel / Data handling
+# Utilities
 pandas
-polars
-openpyxl
-fastexcel
 numpy
-pyarrow
-
-# Google Gemini + API clients
-google-generativeai
-
-
-
-requests
-tqdm
-tenacity
-coloredlogs
 pydantic
 typing-extensions
-protobuf
+protobuf>=3.20.2,<4.21.0
 orjson
+tenacity
+tqdm
+requests
 aiohttp
-anyio
 httpx
 aiofiles
+python-dotenv
 
-# Optional visualization & misc
-matplotlib-inline
+# Visualization & output formatting
 rich
-
-
 tabulate
+matplotlib-inline
+
+
+# Logging, Debugging & Observability
+coloredlogs
+structlog
+loguru
+
+# Data Processing / Storage
+polars
+sqlalchemy
+openpyxl
+pyarrow
+
+# Model / Embedding Utilities
+transformers
+sentence-transformers
+scikit-learn
+torch
+
+# File & Content Handling
+pypdf
+pillow
+striprtf
+beautifulsoup4
+
+# Caching / Performance
+diskcache
+filelock
+
+# Testing & Runtime Tools
+pytest
+ipykernel
+jupyterlab
+
+# Frontend / UI (if you want to make interactive apps)
+gradio
+gradio-client
+
+# Telemetry / Tracing (optional for distributed apps)
+opentelemetry-api
+opentelemetry-sdk
+traceloop-sdk
+
+
+# other
+tqdm
